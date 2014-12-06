@@ -1,7 +1,7 @@
 ﻿<Window x:Class="GfmValidate.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="GfmVaidate - A Github Flavored Markdown validator." Height="676" Width="826">
+        Title="GfmVaidate - A GitHub Flavored Markdown validator." Height="676" Width="826">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,20 +14,12 @@
         </Grid.RowDefinitions>
         <!-- Menu. -->
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#FFA9D1F4" DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="New" />
-                <MenuItem Header="Open" x:Name="OpenFile" Click="OpenFile_Click" />
-                <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
-                <Separator />
-                <MenuItem >
-                    <MenuItem.Header>
-                        <DockPanel>
-                            <TextBlock>Step</TextBlock>
-                            <TextBlock Width="10"></TextBlock>
-                            <TextBlock HorizontalAlignment="Right">F2</TextBlock>
-                        </DockPanel>
-                    </MenuItem.Header>
-                </MenuItem>
+            <MenuItem Header="Clear Markdown" x:Name="NewFile" Click="NewFile_Click" />
+            <MenuItem Header="Open File" x:Name="OpenFile" Click="OpenFile_Click" />
+            <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
+            <MenuItem Header="Reference">
+                <Hyperlink NavigateUri="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" RequestNavigate="Hyperlink_RequestNavigate">Markdown Cheatsheet</Hyperlink>
+                <Hyperlink NavigateUri="https://help.github.com/articles/github-flavored-markdown/" RequestNavigate="Hyperlink_RequestNavigate">GitHub Flavored Markdown</Hyperlink>
             </MenuItem>
         </Menu>
 
@@ -37,9 +29,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
                 <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5">
-                    <Label Grid.Row="0" HorizontalAlignment="Stretch" Content="Drag and Drop, Copy/Paste or manual enter MarkDown below."/>
+                    <Label Grid.Row="0" HorizontalAlignment="Stretch" Content="Open a markdown file, Drag and Drop, Copy/Paste or start typing below."/>
                 </Border>
-                <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" DragOver="MarkDownText_DragOver" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter"/>
+                <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" DragOver="MarkDownText_DragOver" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,9,0"/>
         </Grid>
         
             <Grid Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" >
@@ -55,7 +47,7 @@
 
 
 
-        <GridSplitter HorizontalAlignment="Right"  Width="13" Background="DarkGray" Grid.Row="1" AllowDrop="False"  Cursor="SizeWE"/>
+        <GridSplitter HorizontalAlignment="Right"  Width="8" Background="DarkGray" Grid.Row="1" AllowDrop="False"  Cursor="SizeWE"/>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Height="50">
             <StackPanel  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="GitHub Username:"/>

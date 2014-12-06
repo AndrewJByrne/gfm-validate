@@ -114,7 +114,7 @@ namespace GfmValidate
                 if (_gitHubClient == null)
                     _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.Gun, MainViewModel.Pun));
 
-                string html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
+                string html = (String.IsNullOrEmpty(MarkDownText.Text)) ? "" : await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
 
                 // Could trigger a validation of the text right now!
                 // MessageBox.Show(html);
@@ -212,7 +212,7 @@ namespace GfmValidate
             ofd.Filter = "markdown files (*.md)|*.md|txt files (*.txt)|*.txt|All files (*.*)|*.*";
             ofd.Title = "Select a MarkDown file";
             bool? response = ofd.ShowDialog();
-            if (response.HasValue)
+            if (response.HasValue && !String.IsNullOrEmpty(ofd.FileName))
             {
                 Debug.WriteLine(ofd.FileName);
                 await LoadFileAsync(ofd.FileName);
@@ -222,6 +222,18 @@ namespace GfmValidate
 
         private async void Validate_Click(object sender, RoutedEventArgs e)
         {
+            await PreviewMarkDownAsync();
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        private async void NewFile_Click(object sender, RoutedEventArgs e)
+        {
+            MarkDownText.Text = string.Empty;
             await PreviewMarkDownAsync();
         }
 
