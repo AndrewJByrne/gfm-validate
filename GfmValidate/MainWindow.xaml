@@ -12,6 +12,25 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <!-- Menu. -->
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#FFA9D1F4" DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="New" />
+                <MenuItem Header="Open" x:Name="OpenFile" Click="OpenFile_Click" />
+                <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
+                <Separator />
+                <MenuItem >
+                    <MenuItem.Header>
+                        <DockPanel>
+                            <TextBlock>Step</TextBlock>
+                            <TextBlock Width="10"></TextBlock>
+                            <TextBlock HorizontalAlignment="Right">F2</TextBlock>
+                        </DockPanel>
+                    </MenuItem.Header>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
         <Grid Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

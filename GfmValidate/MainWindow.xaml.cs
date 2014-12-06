@@ -1,4 +1,5 @@
-﻿using Octokit;
+﻿using Microsoft.Win32;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -170,15 +171,21 @@ namespace GfmValidate
         private async void MarkDownText_Drop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files != null && files.Length != 0)
+            if (files != null && files.Length == 1)
             {
                 var filePath = files[0];
-                using (StreamReader reader = new StreamReader(filePath))
-                {
-                    MarkDownText.Text = await reader.ReadToEndAsync();
-                    await PreviewMarkDownAsync();
-                }
+                await LoadFileAsync(filePath);
+                await PreviewMarkDownAsync();
             }
+        }
+
+        private async Task LoadFileAsync(string path)
+        {
+            using (StreamReader reader = new StreamReader(path))
+            {
+                MarkDownText.Text =  await reader.ReadToEndAsync();
+            }
+
         }
 
         private void MarkDownText_DragEnter(object sender, DragEventArgs e)
@@ -196,6 +203,26 @@ namespace GfmValidate
             // However, I'm not concerned about that for this internal tool right now, but I still have to update the field manually.
             MainViewModel.Gun = GunText.Text;
             MainViewModel.Pun = PunText.Password;
+        }
+
+        private async void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = false;
+            ofd.Filter = "markdown files (*.md)|*.md|txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            ofd.Title = "Select a MarkDown file";
+            bool? response = ofd.ShowDialog();
+            if (response.HasValue)
+            {
+                Debug.WriteLine(ofd.FileName);
+                await LoadFileAsync(ofd.FileName);
+                await PreviewMarkDownAsync();
+            }
+        }
+
+        private async void Validate_Click(object sender, RoutedEventArgs e)
+        {
+            await PreviewMarkDownAsync();
         }
 
     }
