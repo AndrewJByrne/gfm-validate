@@ -1,19 +1,29 @@
 ﻿<Window x:Class="GfmValidate.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="676" Width="826">
+        Title="GfmVaidate - A Github Flavored Markdown validator." Height="676" Width="826">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <WebBrowser Grid.Column="1" Grid.Row="0" x:Name="ContentPreview" Margin="20" AllowDrop="False"  />
-        <TextBox Grid.Column="0" Grid.Row="0" Background="Yellow" x:Name="MarkDownText" AcceptsReturn="True" DragOver="MarkDownText_DragOver" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" />
-        <GridSplitter HorizontalAlignment="Right"  Width="13" Background="Black" Grid.Row="0" AllowDrop="False" />
-        <StatusBar Grid.Row="1" Grid.ColumnSpan="2" Height="80"/>
+        
+        <WebBrowser Grid.Column="1" Grid.Row="1" x:Name="ContentPreview" Margin="20" AllowDrop="False"  />
+        <TextBox Grid.Column="0" Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" DragOver="MarkDownText_DragOver" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" BorderBrush="Black" BorderThickness="3"/>
+        <GridSplitter HorizontalAlignment="Right"  Width="13" Background="DarkGray" Grid.Row="1" AllowDrop="False"/>
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Height="50">
+            <StackPanel  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Content="GitHub Username:"/>
+                <TextBox  Width="150" x:Name="GunText"/>
+                <Label Content="GitHub password:"/>
+                <PasswordBox x:Name="PunText"  Width="150"/>
+                <Button Content="Set" x:Name="SetCredentials" Click="SetCredentials_Click" Width="50" Margin="20,0,0,0"/>
+            </StackPanel>
+        </StatusBar>
     </Grid>
 </Window>

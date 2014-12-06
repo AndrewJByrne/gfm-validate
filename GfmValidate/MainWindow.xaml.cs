@@ -25,6 +25,7 @@ namespace GfmValidate
     public partial class MainWindow : Window
     {
         private string _previewTemplate = string.Empty;
+        public MainViewModel MainViewModel = new MainViewModel();
 
         public MainWindow()
         {
@@ -33,8 +34,8 @@ namespace GfmValidate
             ContentPreview.Navigated += ContentPreview_Navigated;
             SetSilent(ContentPreview, true);
 
-            // register for both handled and unhandled Executed events
-
+            // I want to preview whatever the user pastes into the markdown textbox
+            // To do this, I listen for the Paste event.
             MarkDownText.AddHandler(CommandManager.ExecutedEvent,
 
                 new RoutedEventHandler(CommandExecuted), true);
@@ -42,8 +43,17 @@ namespace GfmValidate
             MarkDownText.PreviewDragOver += MarkDownText_PreviewDragOver;
 
             Loaded += MainWindow_Loaded;
+            Closing += MainWindow_Closing;
+
+            this.DataContext = MainViewModel;
         }
 
+        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
+
+        // For some reason, DragOver is never fired, so I do the work here instead. 
         void MarkDownText_PreviewDragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -62,6 +72,8 @@ namespace GfmValidate
 
         async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            GunText.Text = MainViewModel.Gun;
+            PunText.Password = MainViewModel.Pun;
             using (StreamReader reader = new StreamReader("Preview.html"))
             {
                 _previewTemplate = await reader.ReadToEndAsync();
@@ -95,8 +107,11 @@ namespace GfmValidate
 
         private async Task PreviewMarkDownAsync()
         {
+            // Note: I thought I need to pass in real GitHub credentials here. 
+            // However, during testing, it seems I can create the ProductHeaderValue with anything I want
+            // and it still works (?)
             if (_gitHubClient == null)
-                _gitHubClient = new GitHubClient(new ProductHeaderValue("AndrewJByrne", "pepsi101"));
+                _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.Gun, MainViewModel.Pun));
 
             string html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
 
@@ -105,6 +120,8 @@ namespace GfmValidate
             ContentPreview.NavigateToString(string.Format(_previewTemplate, html));
         }
 
+        // I do two things here - I suppress warnings and I make sure the browser is not a drop target.
+        // This is done using reflection, setting properties through IWebBrowser2
         public static void SetSilent(WebBrowser browser, bool silent)
         {
             if (browser == null)
@@ -135,6 +152,7 @@ namespace GfmValidate
             int QueryService([In] ref Guid guidService, [In] ref Guid riid, [MarshalAs(UnmanagedType.IDispatch)] out object ppvObject);
         }
 
+        // NEVER FIRES - can remove
         private void MarkDownText_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -164,6 +182,15 @@ namespace GfmValidate
                 e.Effects = DragDropEffects.Copy;
             else
                 e.Effects = DragDropEffects.None;
+        }
+
+        private void SetCredentials_Click(object sender, RoutedEventArgs e)
+        {
+            // Password on PasswordBox is not bindabe since it isn't a DependencyObject.
+            // This is done for security reasons, since a string-based version of the password would be stored in the DO tree
+            // However, I'm not concerned about that for this internal tool right now, but I still have to update the field manually.
+            MainViewModel.Gun = GunText.Text;
+            MainViewModel.Pun = PunText.Password;
         }
 
     }
