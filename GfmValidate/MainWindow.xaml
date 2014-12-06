@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!-- Menu. -->
-        <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#FFA9D1F4" DockPanel.Dock="Top">
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#DA3F26" Foreground="White" DockPanel.Dock="Top">
             <MenuItem Header="Clear Markdown" x:Name="NewFile" Click="NewFile_Click" />
             <MenuItem Header="Open File" x:Name="OpenFile" Click="OpenFile_Click" />
             <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
