@@ -1,6 +1,7 @@
 ﻿using Octokit;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -107,17 +108,21 @@ namespace GfmValidate
 
         private async Task PreviewMarkDownAsync()
         {
-            // Note: I thought I need to pass in real GitHub credentials here. 
-            // However, during testing, it seems I can create the ProductHeaderValue with anything I want
-            // and it still works (?)
-            if (_gitHubClient == null)
-                _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.Gun, MainViewModel.Pun));
+            try
+            {
+                if (_gitHubClient == null)
+                    _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.Gun, MainViewModel.Pun));
 
-            string html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
+                string html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
 
-            // Could trigger a validation of the text right now!
-           // MessageBox.Show(html);
-            ContentPreview.NavigateToString(string.Format(_previewTemplate, html));
+                // Could trigger a validation of the text right now!
+                // MessageBox.Show(html);
+                ContentPreview.NavigateToString(string.Format(_previewTemplate, html));
+            }
+            catch(ArgumentException aex)
+            {
+                MessageBox.Show(aex.Message);
+            }
         }
 
         // I do two things here - I suppress warnings and I make sure the browser is not a drop target.
