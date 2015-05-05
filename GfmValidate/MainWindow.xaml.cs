@@ -76,9 +76,18 @@ namespace GfmValidate
         {
             GunText.Text = MainViewModel.Gun;
             PunText.Password = MainViewModel.Pun;
+
             using (StreamReader reader = new StreamReader("Preview.html"))
             {
                 _previewTemplate = await reader.ReadToEndAsync();
+            }
+        }
+
+        private void CheckCredentials()
+        {
+            if (String.IsNullOrEmpty(MainViewModel.Gun) || String.IsNullOrEmpty(MainViewModel.Pun))
+            {
+                MessageBox.Show("You need to enter GitHub credentials to use this app.");
             }
         }
 
