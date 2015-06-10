@@ -11,7 +11,7 @@ namespace GfmValidate
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public string Gun
+        public string GitHubUsername
         {
             get
             {
@@ -28,7 +28,7 @@ namespace GfmValidate
             }
         }
 
-        public string Pun
+        public string GitHubPassword
         {
             get
             {

@@ -1,23 +1,15 @@
 ﻿using Microsoft.Win32;
 using Octokit;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GfmValidate
 {
@@ -26,7 +18,11 @@ namespace GfmValidate
     /// </summary>
     public partial class MainWindow : Window
     {
+        // String to hold the preview (HTML) template. 
+        // I inject the rendered markdwon into this template. 
         private string _previewTemplate = string.Empty;
+
+        private GitHubClient _gitHubClient = null;
         public MainViewModel MainViewModel = new MainViewModel();
 
         public MainWindow()
@@ -39,7 +35,6 @@ namespace GfmValidate
             // I want to preview whatever the user pastes into the markdown textbox
             // To do this, I listen for the Paste event.
             MarkDownText.AddHandler(CommandManager.ExecutedEvent,
-
                 new RoutedEventHandler(CommandExecuted), true);
 
             MarkDownText.PreviewDragOver += MarkDownText_PreviewDragOver;
@@ -58,9 +53,12 @@ namespace GfmValidate
         // For some reason, DragOver is never fired, so I do the work here instead. 
         void MarkDownText_PreviewDragOver(object sender, DragEventArgs e)
         {
+            // Check if the user is trying to drop a file
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                // The copy cursor indicates to the user that this action is allowed. 
                 e.Effects = DragDropEffects.Copy;
             else
+                // Indicate that whatever the user is trying to drop is not allowed. 
                 e.Effects = DragDropEffects.None;
 
             e.Handled = true;
@@ -74,9 +72,12 @@ namespace GfmValidate
 
         async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            GunText.Text = MainViewModel.Gun;
-            PunText.Password = MainViewModel.Pun;
+            // I should do this with data binding. However, the Password field on 
+            // the PasswordBox is not bindable for security reasons. 
+            GitHubUsernameTextBox.Text = MainViewModel.GitHubUsername;
+            GitHubPasswordBox.Password = MainViewModel.GitHubPassword;
 
+            // Load the preview template
             using (StreamReader reader = new StreamReader("Preview.html"))
             {
                 _previewTemplate = await reader.ReadToEndAsync();
@@ -85,7 +86,7 @@ namespace GfmValidate
 
         private void CheckCredentials()
         {
-            if (String.IsNullOrEmpty(MainViewModel.Gun) || String.IsNullOrEmpty(MainViewModel.Pun))
+            if (String.IsNullOrEmpty(MainViewModel.GitHubUsername) || String.IsNullOrEmpty(MainViewModel.GitHubPassword))
             {
                 MessageBox.Show("You need to enter GitHub credentials to use this app.");
             }
@@ -93,17 +94,11 @@ namespace GfmValidate
 
         private async void CommandExecuted(object sender, RoutedEventArgs e)
         {
-
-            if ((e as ExecutedRoutedEventArgs).Command
-
-                == ApplicationCommands.Paste)
+            if ((e as ExecutedRoutedEventArgs).Command == ApplicationCommands.Paste)
             {
-
                 // verify that the textbox handled the paste command
-
                 if (e.Handled)
                 {
-                    string html = string.Empty;
                     if (String.IsNullOrEmpty(MarkDownText.Text))
                     {
                         await PreviewMarkDownAsync();
@@ -114,14 +109,14 @@ namespace GfmValidate
 
         }
 
-        private GitHubClient _gitHubClient = null;
-
+        // Use the Octokit client library to render the markdown into HTML
         private async Task PreviewMarkDownAsync()
         {
             try
             {
+                // Lasy-load the client. I could refactor this to a lazy-loaded property
                 if (_gitHubClient == null)
-                    _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.Gun, MainViewModel.Pun));
+                    _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.GitHubUsername, MainViewModel.GitHubPassword));
 
                 string html = (String.IsNullOrEmpty(MarkDownText.Text)) ? "" : await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
 
@@ -167,15 +162,6 @@ namespace GfmValidate
             int QueryService([In] ref Guid guidService, [In] ref Guid riid, [MarshalAs(UnmanagedType.IDispatch)] out object ppvObject);
         }
 
-        // NEVER FIRES - can remove
-        private void MarkDownText_DragOver(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effects = DragDropEffects.Copy;
-            else
-                e.Effects = DragDropEffects.None;
-
-        }
 
         private async void MarkDownText_Drop(object sender, DragEventArgs e)
         {
@@ -207,11 +193,11 @@ namespace GfmValidate
 
         private void SetCredentials_Click(object sender, RoutedEventArgs e)
         {
-            // Password on PasswordBox is not bindabe since it isn't a DependencyObject.
+            // Password on PasswordBox is not bindable since it isn't a DependencyObject.
             // This is done for security reasons, since a string-based version of the password would be stored in the DO tree
             // However, I'm not concerned about that for this internal tool right now, but I still have to update the field manually.
-            MainViewModel.Gun = GunText.Text;
-            MainViewModel.Pun = PunText.Password;
+            MainViewModel.GitHubUsername = GitHubUsernameTextBox.Text;
+            MainViewModel.GitHubPassword = GitHubPasswordBox.Password;
         }
 
         private async void OpenFile_Click(object sender, RoutedEventArgs e)

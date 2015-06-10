@@ -31,7 +31,7 @@
                 <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5">
                     <Label Grid.Row="0" HorizontalAlignment="Stretch" Content="Open a markdown file, Drag and Drop, Copy/Paste or start typing below."/>
                 </Border>
-                <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" DragOver="MarkDownText_DragOver" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,9,0"/>
+                <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,9,0"/>
         </Grid>
         
             <Grid Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" >
@@ -51,9 +51,9 @@
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Height="50">
             <StackPanel  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="GitHub Username:"/>
-                <TextBox  Width="150" x:Name="GunText"/>
+                <TextBox  Width="150" x:Name="GitHubUsernameTextBox"/>
                 <Label Content="GitHub password:"/>
-                <PasswordBox x:Name="PunText"  Width="150"/>
+                <PasswordBox x:Name="GitHubPasswordBox"  Width="150"/>
                 <Button Content="Set" x:Name="SetCredentials" Click="SetCredentials_Click" Width="50" Margin="20,0,0,0"/>
             </StackPanel>
         </StatusBar>
