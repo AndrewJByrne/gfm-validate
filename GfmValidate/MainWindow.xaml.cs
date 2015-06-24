@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
-namespace GfmValidate
+namespace Andrew.J.Byrne.GfmValidate
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

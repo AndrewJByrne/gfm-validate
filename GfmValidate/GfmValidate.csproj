@@ -65,6 +65,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>GfmValidate.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Octokit">
       <HintPath>..\packages\Octokit.0.5.2\lib\net45\Octokit.dll</HintPath>
@@ -133,7 +136,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.ico" />
+    <Resource Include="logo.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Preview.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

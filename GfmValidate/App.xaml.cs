@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace GfmValidate
+namespace Andrew.J.Byrne.GfmValidate
 {
     /// <summary>
     /// Interaction logic for App.xaml

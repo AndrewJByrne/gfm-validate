@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GfmValidate
+namespace Andrew.J.Byrne.GfmValidate
 {
     public class MainViewModel : INotifyPropertyChanged
     {

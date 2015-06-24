@@ -1,7 +1,7 @@
-﻿<Window x:Class="GfmValidate.MainWindow"
+﻿<Window x:Class="Andrew.J.Byrne.GfmValidate.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="GfmVaidate - A GitHub Flavored Markdown validator." Height="676" Width="826">
+        Title="GfmValidate - A GitHub Flavored Markdown validator." Height="676" Width="826">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

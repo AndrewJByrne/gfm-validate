@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GfmValidate.Properties {
+namespace Andrew.J.Byrne.GfmValidate.Properties {
     using System;
     
     
