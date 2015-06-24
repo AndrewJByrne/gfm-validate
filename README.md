@@ -6,9 +6,9 @@ A simple GitHub Flavored Markdown (Gfm) validator. Uses the [Octokit .NET client
 This Windows desktop app demonstrates the following:
 * Connecting to GitHub APIs using the Octokit library for .NET 4.5
 * Parsing markdown into raw HTML using the RenderRawMarkdown method from the Octokit library
-* Displayig HTML using the GitHub CSS
+* Displaying HTML using the GitHub CSS to show how the soruce markdown will render on GitHub
 * A little bit of MVVM
-* Handling drag/drop of markdwon files onto the app surface
+* Handling drag/drop of markdown files onto the app surface
 * App settings
 * Suppression of browser control warnings, preventing browser control from being a drop target
 
