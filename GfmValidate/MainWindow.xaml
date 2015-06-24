@@ -51,7 +51,7 @@
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Height="50">
             <StackPanel  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="GitHub Username:"/>
-                <TextBox  Width="150" x:Name="GitHubUsernameTextBox"/>
+                <TextBox  Width="150" x:Name="GitHubUsernameTextBox" />
                 <Label Content="GitHub password:"/>
                 <PasswordBox x:Name="GitHubPasswordBox"  Width="150"/>
                 <Button Content="Set" x:Name="SetCredentials" Click="SetCredentials_Click" Width="50" Margin="20,0,0,0"/>

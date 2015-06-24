@@ -23,7 +23,7 @@ namespace GfmValidate
         private string _previewTemplate = string.Empty;
 
         private GitHubClient _gitHubClient = null;
-        public MainViewModel MainViewModel = new MainViewModel();
+        public MainViewModel _vM = new MainViewModel();
 
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace GfmValidate
             Loaded += MainWindow_Loaded;
             Closing += MainWindow_Closing;
 
-            this.DataContext = MainViewModel;
+            this.DataContext = _vM;
         }
 
         void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -74,8 +74,8 @@ namespace GfmValidate
         {
             // I should do this with data binding. However, the Password field on 
             // the PasswordBox is not bindable for security reasons. 
-            GitHubUsernameTextBox.Text = MainViewModel.GitHubUsername;
-            GitHubPasswordBox.Password = MainViewModel.GitHubPassword;
+            GitHubUsernameTextBox.Text = _vM.GitHubUsername;
+            GitHubPasswordBox.Password = _vM.GitHubPassword;
 
             // Load the preview template
             using (StreamReader reader = new StreamReader("Preview.html"))
@@ -84,12 +84,14 @@ namespace GfmValidate
             }
         }
 
-        private void CheckCredentials()
+        private bool CheckCredentials()
         {
-            if (String.IsNullOrEmpty(MainViewModel.GitHubUsername) || String.IsNullOrEmpty(MainViewModel.GitHubPassword))
+            if (String.IsNullOrEmpty(_vM.GitHubUsername) || String.IsNullOrEmpty(_vM.GitHubPassword))
             {
                 MessageBox.Show("You need to enter GitHub credentials to use this app.");
+                return false;
             }
+            return true;
         }
 
         private async void CommandExecuted(object sender, RoutedEventArgs e)
@@ -114,15 +116,22 @@ namespace GfmValidate
         {
             try
             {
-                // Lasy-load the client. I could refactor this to a lazy-loaded property
-                if (_gitHubClient == null)
-                    _gitHubClient = new GitHubClient(new ProductHeaderValue(MainViewModel.GitHubUsername, MainViewModel.GitHubPassword));
+                if (CheckCredentials())
+                {
+                    string html = "";
 
-                string html = (String.IsNullOrEmpty(MarkDownText.Text)) ? "" : await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
+                    // Lasy-load the client. I could refactor this to a lazy-loaded property
+                    if (_gitHubClient == null)
+                    {
+                        var productHeaderValue = new ProductHeaderValue(_vM.GitHubUsername, _vM.GitHubPassword);
+                        _gitHubClient = new GitHubClient(productHeaderValue);
+                        html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
+                    }
 
-                // Could trigger a validation of the text right now!
-                // MessageBox.Show(html);
-                ContentPreview.NavigateToString(string.Format(_previewTemplate, html));
+                    // Could trigger a validation of the text right now!
+                    // MessageBox.Show(html);
+                    ContentPreview.NavigateToString(string.Format(_previewTemplate, html));
+                }
             }
             catch(ArgumentException aex)
             {
@@ -148,8 +157,17 @@ namespace GfmValidate
                 sp.QueryService(ref IID_IWebBrowserApp, ref IID_IWebBrowser2, out webBrowser);
                 if (webBrowser != null)
                 {
-                    webBrowser.GetType().InvokeMember("Silent", BindingFlags.Instance | BindingFlags.Public | BindingFlags.PutDispProperty, null, webBrowser, new object[] { silent });
-                    webBrowser.GetType().InvokeMember("RegisterAsDropTarget", BindingFlags.Instance | BindingFlags.Public | BindingFlags.PutDispProperty, null, webBrowser, new object[] { false });
+                    webBrowser.GetType().InvokeMember("Silent"
+                                                        , BindingFlags.Instance 
+                                                        | BindingFlags.Public 
+                                                        | BindingFlags.PutDispProperty
+                                                        , null, webBrowser, new object[] { silent });
+
+                    webBrowser.GetType().InvokeMember("RegisterAsDropTarget"
+                                                      , BindingFlags.Instance 
+                                                      | BindingFlags.Public 
+                                                      | BindingFlags.PutDispProperty
+                                                      , null, webBrowser, new object[] { false });
                 }
             }
         }
@@ -196,8 +214,9 @@ namespace GfmValidate
             // Password on PasswordBox is not bindable since it isn't a DependencyObject.
             // This is done for security reasons, since a string-based version of the password would be stored in the DO tree
             // However, I'm not concerned about that for this internal tool right now, but I still have to update the field manually.
-            MainViewModel.GitHubUsername = GitHubUsernameTextBox.Text;
-            MainViewModel.GitHubPassword = GitHubPasswordBox.Password;
+            _vM.GitHubUsername = GitHubUsernameTextBox.Text;
+            _vM.GitHubPassword = GitHubPasswordBox.Password;
+            
         }
 
         private async void OpenFile_Click(object sender, RoutedEventArgs e)
