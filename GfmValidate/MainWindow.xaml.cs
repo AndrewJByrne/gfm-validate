@@ -84,11 +84,12 @@ namespace Andrew.J.Byrne.GfmValidate
             }
         }
 
-        private bool CheckCredentials()
+        private bool CheckCredentials(bool showDialog=true)
         {
             if (String.IsNullOrEmpty(_vM.GitHubUsername) || String.IsNullOrEmpty(_vM.GitHubPassword))
             {
-                MessageBox.Show("You need to enter GitHub credentials to use this app.");
+                if (showDialog)
+                    MessageBox.Show("You need to enter GitHub credentials to use this app.");
                 return false;
             }
             return true;
@@ -218,6 +219,15 @@ namespace Andrew.J.Byrne.GfmValidate
             _vM.GitHubUsername = GitHubUsernameTextBox.Text;
             _vM.GitHubPassword = GitHubPasswordBox.Password;
 
+            if (CheckCredentials(false))
+            {
+                SetStatus("credentials updated");
+            }
+            else
+            {
+                SetStatus("credentials updated (invalid or incomplete)");
+            }
+
             if (!String.IsNullOrEmpty(MarkDownText.Text))
             {
                 await PreviewMarkDownAsync();
@@ -254,6 +264,11 @@ namespace Andrew.J.Byrne.GfmValidate
         {
             MarkDownText.Text = string.Empty;
             await PreviewMarkDownAsync();
+        }
+
+        private void SetStatus(string info)
+        {
+            sbInfo.Text = info;
         }
 
     }
