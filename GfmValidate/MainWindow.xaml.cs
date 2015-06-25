@@ -210,14 +210,18 @@ namespace Andrew.J.Byrne.GfmValidate
                 e.Effects = DragDropEffects.None;
         }
 
-        private void SetCredentials_Click(object sender, RoutedEventArgs e)
+        private async void SetCredentials_Click(object sender, RoutedEventArgs e)
         {
             // Password on PasswordBox is not bindable since it isn't a DependencyObject.
             // This is done for security reasons, since a string-based version of the password would be stored in the DO tree
             // However, I'm not concerned about that for this internal tool right now, but I still have to update the field manually.
             _vM.GitHubUsername = GitHubUsernameTextBox.Text;
             _vM.GitHubPassword = GitHubPasswordBox.Password;
-            
+
+            if (!String.IsNullOrEmpty(MarkDownText.Text))
+            {
+                await PreviewMarkDownAsync();
+            }
         }
 
         private async void OpenFile_Click(object sender, RoutedEventArgs e)
