@@ -15,7 +15,7 @@
         <!-- Menu. -->
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#DA3F26" Foreground="White" DockPanel.Dock="Top">
             <MenuItem Header="Clear Markdown" x:Name="NewFile" Click="NewFile_Click" />
-            <MenuItem Header="Open File" x:Name="OpenFile" Click="OpenFile_Click" />
+            <MenuItem Header="Load File" x:Name="OpenFile" Click="OpenFile_Click" />
             <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
             <MenuItem Header="Reference">
                 <Hyperlink NavigateUri="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" RequestNavigate="Hyperlink_RequestNavigate">Markdown Cheatsheet</Hyperlink>
@@ -28,8 +28,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-                <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5">
-                    <Label Grid.Row="0" HorizontalAlignment="Stretch" Content="Open a markdown file, Drag and Drop, Copy/Paste or start typing below."/>
+            <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5" Background="#FFFF99">
+                <Label Grid.Row="0" HorizontalAlignment="Stretch" Content="Open a .md or drag and drop or paste some markdown. You can also just start typing below." ToolTip="Open a .md or drag and drop or paste some markdown. You can also just start typing below."/>
                 </Border>
                 <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,9,0"/>
         </Grid>
@@ -39,8 +39,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-            <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5">
-                <Label  HorizontalAlignment="Stretch" Content="MarkDown rendered below. (read-only)" />
+            <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5" Background="#FFFF99">
+                <Label  HorizontalAlignment="Stretch" Content="Markdown rendered below. (read-only)" ToolTip="Markdown rendered below. (read-only)"/>
             </Border>
             <WebBrowser Grid.Row="1" x:Name="ContentPreview" Margin="20" AllowDrop="False"  />
             </Grid>
