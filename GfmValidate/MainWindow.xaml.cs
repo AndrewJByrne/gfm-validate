@@ -115,6 +115,7 @@ namespace Andrew.J.Byrne.GfmValidate
         // Use the Octokit client library to render the markdown into HTML
         private async Task PreviewMarkDownAsync()
         {
+            SetStatus("validating ...");
             try
             {
                 if (CheckCredentials())
@@ -139,6 +140,8 @@ namespace Andrew.J.Byrne.GfmValidate
             {
                 MessageBox.Show(aex.Message);
             }
+
+            SetStatus("validation and rendering complete");
         }
 
         // I do two things here - I suppress warnings and I make sure the browser is not a drop target.
