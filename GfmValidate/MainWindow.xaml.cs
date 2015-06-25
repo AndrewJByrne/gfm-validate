@@ -89,7 +89,10 @@ namespace Andrew.J.Byrne.GfmValidate
             if (String.IsNullOrEmpty(_vM.GitHubUsername) || String.IsNullOrEmpty(_vM.GitHubPassword))
             {
                 if (showDialog)
-                    MessageBox.Show("You need to enter GitHub credentials to use this app.");
+                    MessageBox.Show("We need your GitHub credentials to validate and render the markdown"
+                        ,"Invalid GitHub credentials"
+                        ,MessageBoxButton.OK
+                        ,MessageBoxImage.Warning);
                 return false;
             }
             return true;
