@@ -120,13 +120,14 @@ namespace Andrew.J.Byrne.GfmValidate
                 {
                     string html = "";
 
-                    // Lasy-load the client. I could refactor this to a lazy-loaded property
+                    // Lazy-load the client. I could refactor this to a lazy-loaded property
                     if (_gitHubClient == null)
                     {
                         var productHeaderValue = new ProductHeaderValue(_vM.GitHubUsername, _vM.GitHubPassword);
                         _gitHubClient = new GitHubClient(productHeaderValue);
-                        html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
                     }
+
+                    html = await _gitHubClient.Miscellaneous.RenderRawMarkdown(MarkDownText.Text);
 
                     // Could trigger a validation of the text right now!
                     // MessageBox.Show(html);
