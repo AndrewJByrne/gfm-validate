@@ -17,6 +17,7 @@
             <MenuItem Header="Clear Markdown" x:Name="NewFile" Click="NewFile_Click" />
             <MenuItem Header="Load File" x:Name="OpenFile" Click="OpenFile_Click" />
             <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
+            <MenuItem Header="About" x:Name="About" Click="About_Click" />
             <MenuItem Header="Reference">
                 <Hyperlink NavigateUri="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" RequestNavigate="Hyperlink_RequestNavigate">Markdown Cheatsheet</Hyperlink>
                 <Hyperlink NavigateUri="https://help.github.com/articles/github-flavored-markdown/" RequestNavigate="Hyperlink_RequestNavigate">GitHub Flavored Markdown</Hyperlink>
