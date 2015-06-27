@@ -11,6 +11,7 @@ This Windows desktop app demonstrates the following:
 * Handling drag/drop of markdown files onto the app surface
 * App settings
 * Suppression of browser control warnings, preventing browser control from being a drop target
+* Using Octokit 0.13.0
 
 ## Copyright and License
 
