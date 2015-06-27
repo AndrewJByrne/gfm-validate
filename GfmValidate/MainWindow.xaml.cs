@@ -279,7 +279,7 @@ namespace Andrew.J.Byrne.GfmValidate
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Version 1.0\nUsing Octokit 0.13.0", "About GfmValidate", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("  Version 1.0\n  Using Octokit 0.13.0", "About GfmValidate", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
     }

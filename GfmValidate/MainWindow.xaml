@@ -22,6 +22,9 @@
                 <Hyperlink NavigateUri="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" RequestNavigate="Hyperlink_RequestNavigate">Markdown Cheatsheet</Hyperlink>
                 <Hyperlink NavigateUri="https://help.github.com/articles/github-flavored-markdown/" RequestNavigate="Hyperlink_RequestNavigate">GitHub Flavored Markdown</Hyperlink>
             </MenuItem>
+            <Separator/>
+            <!--see https://dev.twitter.com/web/tweet-button/web-intent -->
+            <Hyperlink NavigateUri="https://twitter.com/intent/tweet?text=Check+out+GfmValidate+the+nifty+GitHub+flavored+markdown+validator+for+Windows&amp;url=http%3A%2F%2Fgithub.com%2FAndrewJByrne%2Fgfm-validate&amp;via=AndrewJByrne" RequestNavigate="Hyperlink_RequestNavigate">Tweet this!</Hyperlink>
         </Menu>
 
         <Grid Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
