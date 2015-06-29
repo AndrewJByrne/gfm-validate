@@ -281,7 +281,23 @@ namespace Andrew.J.Byrne.GfmValidate
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("  Version 1.0\n  Using Octokit 0.13.0", "About GfmValidate", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(String.Format("  Version {0}\n  Using Octokit {1}", this.AppVersion, this.OctoKitVersion), "About GfmValidate from Andrew J Byrne", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private string AppVersion
+        {
+            get
+            {
+                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+        }
+
+        private string OctoKitVersion
+        {
+            get
+            {
+                return "0.13.0";
+            }
         }
 
     }
