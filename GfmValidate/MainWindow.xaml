@@ -4,8 +4,9 @@
         Title="GfmValidate - A GitHub Flavored Markdown validator." Height="676" Width="826" Icon="logo.ico" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="386*"/>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="409*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,7 +14,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!-- Menu. -->
-        <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#DA3F26" Foreground="White" DockPanel.Dock="Top">
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#DA3F26" Foreground="White">
             <MenuItem Header="Clear Markdown" x:Name="NewFile" Click="NewFile_Click" />
             <MenuItem Header="Load File" x:Name="OpenFile" Click="OpenFile_Click" />
             <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
@@ -26,33 +27,34 @@
             <!--see https://dev.twitter.com/web/tweet-button/web-intent -->
             <Hyperlink NavigateUri="https://twitter.com/intent/tweet?text=Check+out+GfmValidate+the+nifty+GitHub+flavored+markdown+validator+for+Windows&amp;url=http%3A%2F%2Fgithub.com%2FAndrewJByrne%2Fgfm-validate&amp;via=AndrewJByrne" RequestNavigate="Hyperlink_RequestNavigate">Tweet this!</Hyperlink>
         </Menu>
+        <TextBlock Grid.Row="0" Grid.Column="3" Background="#DA3F26" x:Name="tbFileName" Text="" Foreground="White" TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" TextAlignment="Left"/>
 
-        <Grid Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="5,0,0,0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5" Background="#FFFF99">
                 <Label Grid.Row="0" HorizontalAlignment="Stretch" Content="Open a .md or drag and drop or paste some markdown. You can also just start typing below." ToolTip="Open a .md or drag and drop or paste some markdown. You can also just start typing below."/>
-                </Border>
-                <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,9,0"/>
+            </Border>
+            <TextBox Grid.Row="1"  x:Name="MarkDownText" AcceptsReturn="True" Drop="MarkDownText_Drop" AllowDrop="True" DragEnter="MarkDownText_DragEnter" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,9,0"/>
         </Grid>
-        
-            <Grid Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Border BorderBrush="LightGray" BorderThickness="2" Grid.Row="0" Margin="5" Background="#FFFF99">
                 <Label  HorizontalAlignment="Stretch" Content="Markdown rendered below. (read-only)" ToolTip="Markdown rendered below. (read-only)"/>
             </Border>
             <WebBrowser Grid.Row="1" x:Name="ContentPreview" Margin="20" AllowDrop="False"  />
-            </Grid>
+        </Grid>
 
 
 
-        <GridSplitter HorizontalAlignment="Right"  Width="8" Background="DarkGray" Grid.Row="1" AllowDrop="False"  Cursor="SizeWE"/>
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Height="50">
+        <GridSplitter HorizontalAlignment="Right"  Width="8" Background="DarkGray" Grid.Row="1" AllowDrop="False"  Cursor="SizeWE" Grid.Column="1"/>
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3" Height="50">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

@@ -195,6 +195,7 @@ namespace Andrew.J.Byrne.GfmValidate
             if (files != null && files.Length == 1)
             {
                 var filePath = files[0];
+                tbFileName.Text = filePath;
                 await LoadFileAsync(filePath);
                 await PreviewMarkDownAsync();
             }
@@ -249,6 +250,7 @@ namespace Andrew.J.Byrne.GfmValidate
             bool? response = ofd.ShowDialog();
             if (response.HasValue && !String.IsNullOrEmpty(ofd.FileName))
             {
+                tbFileName.Text = ofd.FileName;
                 Debug.WriteLine(ofd.FileName);
                 await LoadFileAsync(ofd.FileName);
                 await PreviewMarkDownAsync();
