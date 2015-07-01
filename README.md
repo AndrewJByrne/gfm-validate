@@ -13,6 +13,10 @@ This Windows desktop app demonstrates the following:
 * Suppression of browser control warnings, preventing browser control from being a drop target
 * Using Octokit 0.13.0
 
+Got any ideas for how to improve this app? Log an issue to the [Issues List](https://github.com/AndrewJByrne/gfm-validate/issues)
+
+Talk to me on Twitter @AndrewJByrne
+
 ## Copyright and License
 
 Copyright 2015 Andrew J. Byrne
