@@ -17,6 +17,7 @@
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Width="Auto" Height="20" Background="#DA3F26" Foreground="White">
             <MenuItem Header="Clear Markdown" x:Name="NewFile" Click="NewFile_Click" />
             <MenuItem Header="Load File" x:Name="OpenFile" Click="OpenFile_Click" />
+            <MenuItem Header="Save File" x:Name="SaveFile" Click="SaveFile_Click" />
             <MenuItem Header="Validate" x:Name="Validate" Click="Validate_Click" />
             <MenuItem Header="About" x:Name="About" Click="About_Click" />
             <MenuItem Header="Reference">

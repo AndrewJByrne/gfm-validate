@@ -203,9 +203,26 @@ namespace Andrew.J.Byrne.GfmValidate
 
         private async Task LoadFileAsync(string path)
         {
-            using (StreamReader reader = new StreamReader(path))
+            if (!string.IsNullOrEmpty(path))
             {
-                MarkDownText.Text =  await reader.ReadToEndAsync();
+                tbFileName.Text = path;
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    MarkDownText.Text = await reader.ReadToEndAsync();
+                }
+            }
+
+        }
+
+        private async Task SaveFileAsync(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                tbFileName.Text = path;
+                using (StreamWriter writer = new StreamWriter(path))
+                {
+                    await writer.WriteAsync(MarkDownText.Text);
+                }
             }
 
         }
@@ -300,5 +317,16 @@ namespace Andrew.J.Byrne.GfmValidate
             }
         }
 
+        private async void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "markdown files (*.md)|*.md|txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            sfd.Title = "Save file";
+            bool? response = sfd.ShowDialog();
+            if (response.HasValue && !String.IsNullOrEmpty(sfd.FileName))
+            {
+                await SaveFileAsync(sfd.FileName);
+            }
+        }
     }
 }
